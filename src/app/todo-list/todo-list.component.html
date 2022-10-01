@@ -1,0 +1,90 @@
+
+<form class="row form_1 my-3 p-3 border rounded">
+    <div class="row form-group mb-1">
+        <label for="exampleInputEmail1"><h3>Add new item</h3></label>
+
+        <div class="col-7 p-0">
+            <input type="text" class="pl-0 form-control" placeholder="Add Item Here" [(ngModel)]="item" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col-3 pl-0 pr-1">
+            <input type="text" class=" form-control" placeholder="Add Status" [(ngModel)]="item_status" [ngModelOptions]="{standalone: true}">
+        </div>
+        <button type="submit" class="col-2  btn btn-primary" (click)="onSubmit()">Submit</button>
+    </div>
+</form>
+
+<div class="form-group row">
+    <label for="searchtext" class="col-2">Search</label>
+    <div class="col-8">
+        <input type="text" class="col-8 form-control" [(ngModel)]="searchtext" placeholder="Search">
+
+        <!-- <button class="btn btn-primary col-2">Search</button> -->
+    </div>
+</div>
+<h2 *ngIf="msg != ''">{{msg}}</h2>
+
+<div class="table-responsive" *ngIf="searchtext == '' && list_obj.length > 0">
+    <table class="table table-striped">
+    <!-- <caption>List of users</caption> -->
+        
+        <thead>
+            <tr>
+                <th class="col-1">{{table_label.index}}</th>
+                <th class="col-7">{{table_label.title}}</th>
+                <th class="col-2">{{table_label.action}}</th>
+                <th class="col-2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of list_obj; index as i">
+                <th scope="row">{{i + 1}}</th>
+                <td>
+                    <div class="row" *ngIf="item.editMode == true">
+                        <input class="col-7" type="text"  [(ngModel)]="item.title">
+                        <button class="col-2 btn btn-success" (click)="onEditFalse(item)">Save</button>
+                    </div>
+                    <!-- <input type="text" *ngIf="editMode == true" [(ngModel)]="item.title"> -->
+                    <span *ngIf="item.editMode == false">{{item.title}}</span>
+                </td>
+                <!-- <td>{{item.title}}</td> -->
+                <td>{{item.status}}</td>
+                <td><button class="btn btn-danger" (click)="onDelete(item)">Delete</button></td>
+                <td><button class="btn btn-info" (click)="onEdit(item)">Edit</button></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive" *ngIf="searchtext != '' && list_obj.length > 0">
+    <table class="table table-striped">
+    <!-- <caption>List of users</caption> -->
+        <thead>
+            <tr>
+                <th class="col-1">{{table_label.index}}</th>
+                <th class="col-7">{{table_label.title}}</th>
+                <th class="col-2">{{table_label.action}}</th>
+                <th class="col-2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of list_obj | filter: searchtext ;  index as i">
+                <th scope="row">{{i + 1}}</th>
+                <td>
+                    <div class="row" *ngIf="item.editMode == true">
+                        <input class="col-7" type="text"  [(ngModel)]="item.title">
+                        <button class="col-2 btn btn-success" (click)="onEditFalse(item)">Save</button>
+                    </div>
+                    <!-- <input type="text" *ngIf="editMode == true" [(ngModel)]="item.title"> -->
+                    <span *ngIf="item.editMode == false">{{item.title}}</span>
+                </td>
+                <!-- <td>{{item.title}}</td> -->
+                <td>{{item.status}}</td>
+                <td><button class="btn btn-danger" (click)="onDelete(item)">Delete</button></td>
+                <td><button class="btn btn-info" (click)="onEdit(item)">Edit</button></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
